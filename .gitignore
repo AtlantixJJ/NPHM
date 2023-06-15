@@ -1,1 +1,4 @@
-/src/NPHM/env_paths.py
+src/NPHM/env_paths.py
+*.pyc
+dataset/NPHM_raw
+dataset/point_cloud

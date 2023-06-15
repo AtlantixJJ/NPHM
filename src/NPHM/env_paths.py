@@ -1,17 +1,17 @@
 import json
 
-CODE_BASE = '/PATH/TO/CLONED/REPO/'
-ASSETS = '/PATH/TO/CLONED/REPO/assets/'
-SUPERVISION_IDENTITY = '/PATH/TO/YOUR/LARGE_TRAINING_DATA/IDENTITY/'
-SUPERVISION_DEFORMATION_OPEN = '/PATH/TO/YOUR/LARGE_TRAINING_DATA/EXPRESSIONS/'
-DATA_SINGLE_VIEW = '/PATH/TO/TEST_DATA/'
-DATA = '/PATH/TO/NPHM_DATASET/'
+CODE_BASE = f'/home/jianjinx/data/My3D/thirdparty/NPHM'
+ASSETS = f'{CODE_BASE}/assets/'
+SUPERVISION_IDENTITY = f'{CODE_BASE}/dataset/point_cloud/identity'
+SUPERVISION_DEFORMATION_OPEN = f'{CODE_BASE}/dataset/point_cloud/expression'
+DATA_SINGLE_VIEW = f'{CODE_BASE}/dataset/NPHM_raw/single_view_synthetic_benchmark'
+DATA = f'{CODE_BASE}/dataset/NPHM_raw'
 
-DUMMY_DATA = '/PATH/TO/CLONED/REPO/dataset/dummy_data/dataset/'
-DUMMY_single_view = '/PATH/TO/CLONED/REPO/dataset/dummy_data/single_view/'
+DUMMY_DATA = f'{CODE_BASE}/dataset/dummy_data/dataset/'
+DUMMY_single_view = f'{CODE_BASE}/dataset/dummy_data/single_view/'
 
-EXPERIMENT_DIR = '/PATH/TO/SAVE_CHECKPOINTS_AND_LOG_RECONSTRUCTIONS_DURING_TRAINING/'
-FITTING_DIR = '/PATH/TO/LOG_TEST_SET_RECONSTRUCTIONS'
+EXPERIMENT_DIR = f'{CODE_BASE}/expr'
+FITTING_DIR = f'{CODE_BASE}/expr/fitting'
 
 ANCHOR_INDICES_PATH = ASSETS + 'lm_inds_39.npy'
 ANCHOR_MEAN_PATH = ASSETS + 'anchors_39.npy'

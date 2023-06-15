@@ -86,17 +86,21 @@ class ScannerData(Dataset):
             on_face = np.load(self.manager.get_train_path_identity_face(iden, expr))
             points = on_face[:, :3]
             normals = on_face[:, 3:6]
+            colors = on_face[:, 6:9]
             non_face = np.load(self.manager.get_train_path_identity_non_face(iden, expr))
             points_outer = non_face[:, :3]
             normals_non_face = non_face[:, 3:6]
+            colors_non_face = non_face[:, 6:9]
 
             # subsample points for supervision
             sup_idx = np.random.randint(0, points.shape[0], self.n_supervision_points_face)
             sup_points = points[sup_idx, :]
             sup_normals = normals[sup_idx, :]
+            sup_colors = colors[sup_idx, :]
             sup_idx_non = np.random.randint(0, points_outer.shape[0], self.n_supervision_points_non_face//5)
             sup_points_non = points_outer[sup_idx_non, :]
             sup_normals_non = normals_non_face[sup_idx_non, :]
+            sup_colors_non = colors_non_face[sup_idx_non, :]
 
         except Exception as e:
             print('SUBJECT: {}'.format(iden))
@@ -113,11 +117,13 @@ class ScannerData(Dataset):
 
         ret_dict = {'points_face': sup_points,
                     'normals_face': sup_normals,
+                    'colors_face': sup_colors,
                     'sup_grad_far': sup_grad_far,
                     'sup_grad_near': sup_grad_near,
                     'idx': np.array([idx]),
                     'points_non_face': sup_points_non,
                     'normals_non_face': sup_normals_non,
+                    'colors_non_face': sup_colors_non
                     }
 
         if not self.lm_inds is None:

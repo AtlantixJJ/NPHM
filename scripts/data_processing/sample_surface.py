@@ -63,14 +63,14 @@ def sample_fields(n_samps, n_samps_off, sigma, s, e):
     # compute field values for points on the surface
     surf_points = pcu.interpolate_barycentric_coords(mesh.face_data.vertex_ids, f_i, bc, mesh.vertex_data.positions)
     surf_normals = pcu.interpolate_barycentric_coords(mesh.face_data.vertex_ids, f_i, bc, n)
-    #surf_uv_coords = (mesh.face_data.wedge_texcoords[f_i] * bc[:, :, np.newaxis]).sum(1)
-    #surf_colors = get_color(texture_path, surf_uv_coords)
+    surf_uv_coords = (mesh.face_data.wedge_texcoords[f_i] * bc[:, :, np.newaxis]).sum(1)
+    surf_colors = get_color(texture_path, surf_uv_coords)
 
     above = manager.cut_throat(surf_points, s, e)
 
     surf_points = surf_points[above, :]
     surf_normals = surf_normals[above, :]
-    #surf_colors = surf_colors[above, :]
+    surf_colors = surf_colors[above, :]
 
     # determine which points lie in the facial region
     if face_region_mesh is not None:
@@ -121,10 +121,10 @@ def sample_fields(n_samps, n_samps_off, sigma, s, e):
     if face_region_mesh is not None:
         rnd_idx_non_face = np.random.randint(0, np.sum(~face_region), n_samps_off)
         return {'face': {'points':surf_points[face_region, :],
-                         #'colors': surf_colors[face_region, :],
+                         'colors': surf_colors[face_region, :],
                          'normals': surf_normals[face_region, :]},
                 'non-face': {'points': surf_points[~face_region, :][rnd_idx_non_face, :],
-                             #'colors': surf_colors[~face_region, :][rnd_idx_non_face, :],
+                             'colors': surf_colors[~face_region, :][rnd_idx_non_face, :],
                              'normals': surf_normals[~face_region, :][rnd_idx_non_face, :]},
                 #'off-surface': {'points': points,
                 #                 'colors': colors,
@@ -171,13 +171,13 @@ def run_subject(s):
             #data_off = data_off.astype(np.float32)
             data_face = np.concatenate([results['face']['points'],
                                         results['face']['normals'],
-                                        #results['face']['colors'].astype(np.float32)
+                                        results['face']['colors'].astype(np.float32)
                                         ], axis=1)
             data_face = data_face.astype(np.float32)
 
             data_non_face = np.concatenate([results['non-face']['points'],
                                             results['non-face']['normals'],
-                                            #results['non-face']['colors'].astype(np.float32)
+                                            results['non-face']['colors'].astype(np.float32)
                                             ], axis=1)
             data_non_face = data_non_face.astype(np.float32)
 
