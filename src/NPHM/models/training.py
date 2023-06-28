@@ -70,7 +70,7 @@ class TrainerAutoDecoder(object):
         config = self.log_dict(cfg)
 
         #TODO
-        wandb.init(project=project, entity="YOUR_WANDB_NAME", config=config)
+        wandb.init(project=project, entity="xujj15", config=config)
 
         print('Big Box')
         self.min = [-0.4, -0.6, -0.7]
