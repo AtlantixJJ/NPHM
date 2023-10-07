@@ -1,8 +1,8 @@
 import os
-
+import sys
+sys.path.insert(0, "src")
 import point_cloud_utils as pcu
 import numpy as np
-import pyvista as pv
 import trimesh
 import PIL
 PIL.Image.MAX_IMAGE_PIXELS = 933120000
@@ -67,7 +67,6 @@ def sample_fields(n_samps, n_samps_off, sigma, s, e):
     surf_colors = get_color(texture_path, surf_uv_coords)
 
     above = manager.cut_throat(surf_points, s, e)
-
     surf_points = surf_points[above, :]
     surf_normals = surf_normals[above, :]
     surf_colors = surf_colors[above, :]
@@ -115,17 +114,16 @@ def sample_fields(n_samps, n_samps_off, sigma, s, e):
         pl = pv.Plotter()
         pl.add_mesh(trimesh.Trimesh(mesh.vertex_data.positions, mesh.face_data.vertex_ids))
         pl.add_points(surf_points, scalars=surf_normals[:, 0])
-        #pl.add_points(surf_points, scalars=surf_colors, rgb=True)
+        pl.add_points(surf_points, scalars=surf_colors, rgb=True)
         pl.show()
 
     if face_region_mesh is not None:
-        rnd_idx_non_face = np.random.randint(0, np.sum(~face_region), n_samps_off)
         return {'face': {'points':surf_points[face_region, :],
                          'colors': surf_colors[face_region, :],
                          'normals': surf_normals[face_region, :]},
-                'non-face': {'points': surf_points[~face_region, :][rnd_idx_non_face, :],
-                             'colors': surf_colors[~face_region, :][rnd_idx_non_face, :],
-                             'normals': surf_normals[~face_region, :][rnd_idx_non_face, :]},
+                'non-face': {'points': surf_points[~face_region, :],
+                             'colors': surf_colors[~face_region, :],
+                             'normals': surf_normals[~face_region, :]},
                 #'off-surface': {'points': points,
                 #                 'colors': colors,
                 #                 'normals': normals,
