@@ -1,3 +1,4 @@
+*.pth
 src/NPHM/env_paths.py
 *.pyc
 dataset/NPHM_raw
